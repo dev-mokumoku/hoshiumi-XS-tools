@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/poyokuro_tools/',
+  base: '/hoshiumi-XS-tools/',
 })
