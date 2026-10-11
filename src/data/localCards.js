@@ -114,14 +114,22 @@ const localCards = [
         is_local: true,
         is_new: true,
       },
+
+
+
+
+
+
+
+
      /********************************
       * リーダー
      ********************************/
       {
         id: "n9",
-        name: "夢野あかり",
-        image_url: `${import.meta.env.BASE_URL}cards/akari_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/akari_a.png`,
+        name: "Selly (IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/selly_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/selly_a.png`,
         family_id:"n9",
     
         card_type: {
@@ -135,9 +143,9 @@ const localCards = [
       },
       {
         id: "n10",
-        name: "らいじん",
-        image_url: `${import.meta.env.BASE_URL}cards/raizin_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/raizin_a.png`,
+        name: "LEO",
+        image_url: `${import.meta.env.BASE_URL}cards/leo_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/leo_a.png`,
         family_id:"n10",
     
         card_type: {
@@ -151,9 +159,9 @@ const localCards = [
       },
       {
         id: "n11",
-        name: "うぉっか",
-        image_url: `${import.meta.env.BASE_URL}cards/voka_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/voka_a.png`,
+        name: "秋雪こはく",
+        image_url: `${import.meta.env.BASE_URL}cards/kohaku_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/kohaku_a.png`,
         family_id:"n11",
     
         card_type: {
@@ -167,9 +175,9 @@ const localCards = [
       },
       {
         id: "n12",
-        name: "昏昏アリア",
-        image_url: `${import.meta.env.BASE_URL}cards/aria_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/aria_a.png`,
+        name: "dtto.",
+        image_url: `${import.meta.env.BASE_URL}cards/dtto_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/dtto_a.png`,
         family_id:"n12",
     
         card_type: {
@@ -183,9 +191,9 @@ const localCards = [
       },
       {
         id: "n13",
-        name: "夜乃くろむ",
-        image_url: `${import.meta.env.BASE_URL}cards/kurom_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/kurom_a.png`,
+        name: "渋谷ハル(IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/haru_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/haru_a.png`,
         family_id:"n13",
     
         card_type: {
@@ -199,9 +207,9 @@ const localCards = [
       },
       {
         id: "n14",
-        name: "白波らむね",
-        image_url: `${import.meta.env.BASE_URL}cards/ramune_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/ramune_a.png`,
+        name: "碧依さくら",
+        image_url: `${import.meta.env.BASE_URL}cards/sakura_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/sakura_a.png`,
         family_id:"n14",
     
         card_type: {
@@ -215,9 +223,9 @@ const localCards = [
       },
       {
         id: "n15",
-        name: "まざー３",
-        image_url: `${import.meta.env.BASE_URL}cards/mother_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/mother_a.png`,
+        name: "Kamito (IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/kamito_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/kamito_a.png`,
         family_id:"n15",
     
         card_type: {
@@ -231,9 +239,9 @@ const localCards = [
       },
       {
         id: "n16",
-        name: "神楽めあ",
-        image_url: `${import.meta.env.BASE_URL}cards/mea_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/mea_a.png`,
+        name: "tttcheekyttt",
+        image_url: `${import.meta.env.BASE_URL}cards/tttcheekyttt_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/tttcheekyttt_a.png`,
         family_id:"n16",
     
         card_type: {
@@ -247,9 +255,9 @@ const localCards = [
       },
       {
         id: "n17",
-        name: "龍巻ちせ",
-        image_url: `${import.meta.env.BASE_URL}cards/chise_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/chise_a.png`,
+        name: "神成きゅび(IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/q_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/q_a.png`,
         family_id:"n17",
     
         card_type: {
@@ -263,9 +271,9 @@ const localCards = [
       },
       {
         id: "n18",
-        name: "千燈うひ",
-        image_url: `${import.meta.env.BASE_URL}cards/uhi_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/uhi_a.png`,
+        name: "Ras (IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/ras_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/ras_a.png`,
         family_id:"n18",
     
         card_type: {
@@ -279,9 +287,9 @@ const localCards = [
       },
       {
         id: "n19",
-        name: "とおこ",
-        image_url: `${import.meta.env.BASE_URL}cards/toko_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/toko_a.png`,
+        name: "胡桃のあ(IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/noa_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/noa_a.png`,
         family_id:"n19",
     
         card_type: {
@@ -295,9 +303,9 @@ const localCards = [
       },
       {
         id: "n20",
-        name: "おぼ",
-        image_url: `${import.meta.env.BASE_URL}cards/obo_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/obo_a.png`,
+        name: "Cpt(IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/cpt_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/cpt_a.png`,
         family_id:"n20",
     
         card_type: {
@@ -311,9 +319,9 @@ const localCards = [
       },
       {
         id: "n21",
-        name: "銀城サイネ",
-        image_url: `${import.meta.env.BASE_URL}cards/saine_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/saine_a.png`,
+        name: "Zeder",
+        image_url: `${import.meta.env.BASE_URL}cards/zeder_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/zeder_a.png`,
         family_id:"n21",
     
         card_type: {
@@ -327,9 +335,9 @@ const localCards = [
       },
       {
         id: "n22",
-        name: "天帝フォルテ",
-        image_url: `${import.meta.env.BASE_URL}cards/tentei_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/tentei_a.png`,
+        name: "Arya Kuroha",
+        image_url: `${import.meta.env.BASE_URL}cards/kuroha_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/kuroha_a.png`,
         family_id:"n22",
     
         card_type: {
@@ -343,9 +351,9 @@ const localCards = [
       },
       {
         id: "n23",
-        name: "じゃすぱー",
-        image_url: `${import.meta.env.BASE_URL}cards/zyasu_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/zyasu_a.png`,
+        name: "ハセシン",
+        image_url: `${import.meta.env.BASE_URL}cards/hase_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/hase_a.png`,
         family_id:"n23",
     
         card_type: {
@@ -359,9 +367,9 @@ const localCards = [
       },
       {
         id: "n24",
-        name: "乾伸一郎",
-        image_url: `${import.meta.env.BASE_URL}cards/inui_b.png`,
-        awaken_image_url:`${import.meta.env.BASE_URL}cards/inui_a.png`,
+        name: "花芽すみれ(IGV)",
+        image_url: `${import.meta.env.BASE_URL}cards/sumire_b.png`,
+        awaken_image_url:`${import.meta.env.BASE_URL}cards/sumire_a.png`,
         family_id:"n24",
     
         card_type: {
@@ -373,13 +381,20 @@ const localCards = [
         is_local: true,
         is_new: true,
       },
+
+
+
+
+
+
+
       /********************************
         * リーダー専用カード
       ********************************/
       {
         id: "n25",
         name: "あああ6",
-        image_url: `${import.meta.env.BASE_URL}cards/aria_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/selly_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -388,8 +403,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n12",
+          description:"リーダー:Selly (IGV)",
+          family_id:"n9",
         },
 
         is_ace: false,
@@ -399,7 +414,7 @@ const localCards = [
       {
         id: "n26",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/aria_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/selly_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -408,8 +423,8 @@ const localCards = [
 
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n12",
+          description:"リーダー:Selly (IGV)",
+          family_id:"n9",
         },
     
         is_ace: false,
@@ -419,7 +434,7 @@ const localCards = [
       {
         id: "n27",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/voka_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/leo_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -428,8 +443,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n11",
+          description:"リーダー:LEO",
+          family_id:"n10",
         },
 
         is_ace: false,
@@ -439,7 +454,7 @@ const localCards = [
       {
         id: "n28",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/voka_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/leo_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -448,8 +463,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n11",
+          description:"リーダー:LEO",
+          family_id:"n10",
         },
 
         is_ace: false,
@@ -459,7 +474,7 @@ const localCards = [
       {
         id: "n29",
         name: "あああ6",
-        image_url: `${import.meta.env.BASE_URL}cards/ramune_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kohaku_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -468,8 +483,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n14",
+          description:"リーダー:秋雪こはく",
+          family_id:"n11",
         },
 
         is_ace: false,
@@ -479,7 +494,7 @@ const localCards = [
       {
         id: "n30",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/ramune_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kohaku_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -488,8 +503,8 @@ const localCards = [
 
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n14",
+          description:"リーダー:秋雪こはく",
+          family_id:"n11",
         },
     
         is_ace: false,
@@ -499,7 +514,7 @@ const localCards = [
       {
         id: "n31",
         name: "あああ6",
-        image_url: `${import.meta.env.BASE_URL}cards/mea_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/dtto_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -508,8 +523,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n16",
+          description:"リーダー:dtto.",
+          family_id:"n12",
         },
 
         is_ace: false,
@@ -519,7 +534,7 @@ const localCards = [
       {
         id: "n32",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/mea_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/dtto_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -528,8 +543,8 @@ const localCards = [
 
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n16",
+          description:"リーダー:dtto.",
+          family_id:"n12",
         },
     
         is_ace: false,
@@ -539,7 +554,7 @@ const localCards = [
       {
         id: "n33",
         name: "いいい",
-        image_url: `${import.meta.env.BASE_URL}cards/obo_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/haru_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -548,8 +563,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n20",
+          description:"リーダー:渋谷ハル(IGV)",
+          family_id:"n13",
         },
 
         is_ace: false,
@@ -559,7 +574,7 @@ const localCards = [
       {
         id: "n34",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/obo_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/haru_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -568,8 +583,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n20",
+          description:"リーダー:渋谷ハル(IGV)",
+          family_id:"n13",
         },
 
         is_ace: false,
@@ -579,7 +594,7 @@ const localCards = [
       {
         id: "n35",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/uhi_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/sakura_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -588,8 +603,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n18",
+          description:"リーダー:碧依さくら",
+          family_id:"n14",
         },
 
         is_ace: false,
@@ -599,7 +614,7 @@ const localCards = [
       {
         id: "n36",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/uhi_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/sakura_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -608,8 +623,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n18",
+          description:"リーダー:碧依さくら",
+          family_id:"n14",
         },
 
         is_ace: false,
@@ -619,7 +634,7 @@ const localCards = [
       {
         id: "n37",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/saine_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kamito_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -628,8 +643,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n21",
+          description:"リーダー:Kamito (IGV)",
+          family_id:"n15",
         },
 
         is_ace: false,
@@ -639,7 +654,7 @@ const localCards = [
       {
         id: "n38",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/saine_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kamito_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -648,8 +663,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n21",
+          description:"リーダー:Kamito (IGV)",
+          family_id:"n15",
         },
 
         is_ace: false,
@@ -659,7 +674,7 @@ const localCards = [
       {
         id: "n39",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/inui_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/tttcheekyttt_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -668,8 +683,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n24",
+          description:"リーダー:tttcheekyttt",
+          family_id:"n16",
         },
 
         is_ace: false,
@@ -679,7 +694,7 @@ const localCards = [
       {
         id: "n40",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/inui_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/tttcheekyttt_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -688,8 +703,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n24",
+          description:"リーダー:tttcheekyttt",
+          family_id:"n16",
         },
 
         is_ace: false,
@@ -699,7 +714,7 @@ const localCards = [
       {
         id: "n41",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/raizin_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/q_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -708,8 +723,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n10",
+          description:"リーダー:神成きゅび(IGV)",
+          family_id:"n17",
         },
 
         is_ace: false,
@@ -719,7 +734,7 @@ const localCards = [
       {
         id: "n42",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/raizin_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/q_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -728,8 +743,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n10",
+          description:"リーダー:神成きゅび(IGV)",
+          family_id:"n17",
         },
 
         is_ace: false,
@@ -739,7 +754,7 @@ const localCards = [
       {
         id: "n43",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/akari_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/ras_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -748,8 +763,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n9",
+          description:"リーダー:Ras (IGV)",
+          family_id:"n18",
         },
 
         is_ace: false,
@@ -759,7 +774,7 @@ const localCards = [
       {
         id: "n44",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/akari_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/ras_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -768,8 +783,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n9",
+          description:"リーダー:Ras (IGV)",
+          family_id:"n18",
         },
 
         is_ace: false,
@@ -779,7 +794,7 @@ const localCards = [
       {
         id: "n45",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/mother_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/noa_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -788,8 +803,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n15",
+          description:"リーダー:胡桃のあ(IGV)",
+          family_id:"n19",
         },
 
         is_ace: false,
@@ -799,7 +814,7 @@ const localCards = [
       {
         id: "n46",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/mother_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/noa_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -808,8 +823,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n15",
+          description:"リーダー:胡桃のあ(IGV)",
+          family_id:"n19",
         },
 
         is_ace: false,
@@ -819,7 +834,7 @@ const localCards = [
       {
         id: "n47",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/kurom_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/cpt_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -828,8 +843,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n13",
+          description:"リーダー:Cpt(IGV)",
+          family_id:"n20",
         },
 
         is_ace: false,
@@ -839,7 +854,7 @@ const localCards = [
       {
         id: "n48",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/kurom_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/cpt_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -848,8 +863,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n13",
+          description:"リーダー:Cpt(IGV)",
+          family_id:"n20",
         },
 
         is_ace: false,
@@ -859,7 +874,7 @@ const localCards = [
       {
         id: "n49",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/toko_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/zeder_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -868,8 +883,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n19",
+          description:"リーダー:Zeder",
+          family_id:"n21",
         },
 
         is_ace: false,
@@ -879,7 +894,7 @@ const localCards = [
       {
         id: "n50",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/toko_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/zeder_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -888,8 +903,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n19",
+          description:"リーダー:Zeder",
+          family_id:"n21",
         },
 
         is_ace: false,
@@ -899,7 +914,7 @@ const localCards = [
       {
         id: "n51",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/chise_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kuroha_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -908,8 +923,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n17",
+          description:"リーダー:Arya Kuroha",
+          family_id:"n22",
         },
 
         is_ace: false,
@@ -919,7 +934,7 @@ const localCards = [
       {
         id: "n52",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/chise_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kuroha_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -928,8 +943,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n17",
+          description:"リーダー:Arya Kuroha",
+          family_id:"n22",
         },
 
         is_ace: false,
@@ -939,7 +954,7 @@ const localCards = [
       {
         id: "n53",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/tentei_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/hase_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -948,8 +963,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n22",
+          description:"リーダー:ハセシン",
+          family_id:"n23",
         },
 
         is_ace: false,
@@ -959,7 +974,7 @@ const localCards = [
       {
         id: "n54",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/tentei_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/hase_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -968,8 +983,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n22",
+          description:"リーダー::ハセシン",
+          family_id:"n23",
         },
 
         is_ace: false,
@@ -979,7 +994,7 @@ const localCards = [
       {
         id: "n55",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/zyasu_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/sumire_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -988,8 +1003,8 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n23",
+          description:"リーダー:花芽すみれ(IGV)",
+          family_id:"n24",
         },
 
         is_ace: false,
@@ -999,7 +1014,7 @@ const localCards = [
       {
         id: "n56",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/zyasu_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/sumire_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -1008,14 +1023,20 @@ const localCards = [
     
         build_rule:{
           type:"require_leader",
-          description:"リーダー：あああ",
-          family_id:"n23",
+          description:"リーダー::花芽すみれ(IGV)",
+          family_id:"n24",
         },
 
         is_ace: false,
         is_local: true,
         is_new: true,
       },
+
+
+      /********************************
+        * タクティクス
+      ********************************/
+
       {
         id: "n57",
         name: "アイテムショップ",

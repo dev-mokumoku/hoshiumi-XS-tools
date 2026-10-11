@@ -41,7 +41,7 @@ export default function DeckBuilderPage({
   });
 
   const GAS_URL =
-    "https://script.google.com/macros/s/AKfycbwYOkMSRnZSLozkLdgDK24qSZcyxuQnbYOiIGr4rvOeYY2fLCrLZIqzx3-vkqVtcvq5bg/exec";
+    "https://script.google.com/macros/s/AKfycbxB_9qEhiPJwXkRynOb3X4zX_g5DfXAtfjhulZ1DlAzNxdneNBIGYv0OAxGgOtoJZnlVA/exec";
     
 // =========================
 // カードキャッシュ
