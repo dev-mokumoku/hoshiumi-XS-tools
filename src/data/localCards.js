@@ -1039,8 +1039,8 @@ const localCards = [
 
       {
         id: "n57",
-        name: "アイテムショップ",
-        image_url: `${import.meta.env.BASE_URL}cards/tc_a.png`,
+        name: "電磁スモーク",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_d.png`,
     
         card_type: {
           internal_id: "tactics",
@@ -1053,8 +1053,8 @@ const localCards = [
       },
       {
         id: "n58",
-        name: "一斉攻撃",
-        image_url: `${import.meta.env.BASE_URL}cards/tc_i.png`,
+        name: "名誉のバッチ",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_m.png`,
     
         card_type: {
           internal_id: "tactics",
@@ -1067,8 +1067,8 @@ const localCards = [
       },
       {
         id: "n59",
-        name: "攻撃要請",
-        image_url: `${import.meta.env.BASE_URL}cards/tc_k.png`,
+        name: "復活ビーコン",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_h.png`,
     
         card_type: {
           internal_id: "tactics",
@@ -1081,22 +1081,8 @@ const localCards = [
       },
       {
         id: "n60",
-        name: "呪いの人形",
-        image_url: `${import.meta.env.BASE_URL}cards/tc_n.png`,
-    
-        card_type: {
-          internal_id: "tactics",
-          display_name: "タクティクス",
-        },
-
-        is_ace: false,
-        is_local: true,
-        is_new: true,
-      },
-      {
-        id: "n61",
-        name: "討伐クエスト",
-        image_url: `${import.meta.env.BASE_URL}cards/tc_t.png`,
+        name: "フォールダウンシールド",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_f.png`,
     
         card_type: {
           internal_id: "tactics",
