@@ -137,6 +137,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:100,
+        awaken_hp:130,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -153,6 +155,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:100,
+        awaken_hp:130,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -169,6 +173,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -185,6 +191,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -201,6 +209,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -217,6 +227,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:100,
+        awaken_hp:130,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -233,6 +245,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -249,6 +263,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:100,
+        awaken_hp:130,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -265,6 +281,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -281,6 +299,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -297,6 +317,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:100,
+        awaken_hp:130,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -313,6 +335,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -329,6 +353,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:100,
+        awaken_hp:130,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -345,6 +371,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -361,6 +389,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -377,6 +407,8 @@ const localCards = [
           display_name: "リーダー",
         },
     
+        hp:110,
+        awaken_hp:140,
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -1089,6 +1121,7 @@ const localCards = [
           display_name: "タクティクス",
         },
 
+        tactics_type:"equipment",
         is_ace: false,
         is_local: true,
         is_new: true,

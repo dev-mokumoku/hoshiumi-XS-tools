@@ -525,6 +525,30 @@ h2 {
   box-sizing: border-box;
 }
 
+
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 12px 10px;
+  border-style: solid;
+  border-radius: 10px;
+  font-size: inherit;
+  cursor: pointer;
+  transition: border-width 0.2s, box-shadow 0.2s;
+}
+
+.tab-buttons button:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+
+
 /* =========================
    スマホ
 ========================= */
@@ -643,5 +667,89 @@ h2 {
   .leader-layout {
     gap: 6px;
   }
+/* スマホ時のボタン配置 */
+@media (max-width: 900px) {
+
+  /* 自分の盤面・相手の盤面ボタンを横並びにして上に配置 */
+  .leader-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tab-buttons {
+    order: -1;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .tab-buttons button {
+    flex: 1;
+  }
+
+  /* トラッシュ・リンクアサルト・ターン終了・ラウンド終了を縦一列に */
+  .play-right-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .play-right-buttons button {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* スマホ：プレイエリアとボタンを横並びにする */
+@media (max-width: 900px) {
+  .play-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* プレイエリアは左側 */
+  .play-center {
+    order: 1;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* 左右のボタンをまとめて右側に配置 */
+  .play-left-buttons,
+  .play-right-buttons {
+    display: contents;
+  }
+
+  .play-left-buttons button,
+  .play-right-buttons button {
+    flex: none;
+    width: auto;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 38px;
+  }
+
+  /* ボタンを右側に縦一列で配置するための設定 */
+  .play-layout {
+    flex-wrap: wrap;
+  }
+
+  .play-center {
+    order: 1;
+  }
+
+  .play-left-buttons {
+    order: 2;
+  }
+
+  .play-right-buttons {
+    order: 3;
+  }
+}
 
 }

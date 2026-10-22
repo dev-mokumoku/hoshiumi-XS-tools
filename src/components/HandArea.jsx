@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-function HandArea({ hand, playCard }) {
+function HandArea({ hand, playCard, onLongPressCard }) {
   return (
     <div className="card-row">
       {hand.map((card, index) => (
@@ -11,6 +11,7 @@ function HandArea({ hand, playCard }) {
           type={card.type} 
           size="normal"
           onClick={() => playCard(index)}
+          onLongPress={() => onLongPressCard(index)}
         />
       ))}
     </div>

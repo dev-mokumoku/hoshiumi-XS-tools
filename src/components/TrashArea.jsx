@@ -9,6 +9,7 @@ function TrashArea({ trashArea }) {
           src={card.image_url}
           name={card.name}
           size="small"
+          onLongPress={() => onLongPressCard(index)}
         />
       ))}
     </div>

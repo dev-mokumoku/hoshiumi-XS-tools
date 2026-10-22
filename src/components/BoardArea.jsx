@@ -16,6 +16,11 @@ export default function BoardArea({
   setPlayArea,
   setTrashArea,
   onOpenTactics,
+  setHand,
+  onHandLongPressToTrash,
+  onPlayLongPressToTrash,
+  onTrashLongPressToHand,
+  onLinkAssaultTrash,
 
   drawStartingHand,
   drawCard,
@@ -60,29 +65,27 @@ export default function BoardArea({
   };
 
   const executeLinkAssault = () => {
-    const remainCards =
-      linkCards.filter(
-        card => !selectedCards.includes(card)
-      );
-  
-    setPlayArea(prev => [
-      ...prev,
-      ...selectedCards,
-    ]);
-  
-    setTrashArea(prev => [
-      ...prev,
-      ...remainCards,
-    ]);
-  
-    setDeck(prev =>
-      prev.slice(linkCards.length)
+    const remainCards = linkCards.filter(
+      (card) => !selectedCards.includes(card)
     );
+  
+    // 選んだカードをプレイエリアへ
+    setPlayArea((prev) => [...prev, ...selectedCards]);
+  
+    // 選ばなかったカードをトラッシュ履歴へ
+    if (remainCards.length > 0) {
+      onLinkAssaultTrash?.(remainCards);
+    }
+  
+    // リンクアサルトで確認したカードをデッキから取り除く
+    setDeck((prev) => prev.slice(linkCards.length));
   
     setShowLinkAssault(false);
     setLinkCards([]);
     setSelectedCards([]);
   };
+
+  
   return (
     <>
       {/* プレイエリア */}
@@ -105,6 +108,7 @@ export default function BoardArea({
             <PlayArea
                 playArea={playArea}
                 returnToHand={returnToHand}
+                onLongPressCard={onPlayLongPressToTrash}
             />
             </div>
 
@@ -130,6 +134,7 @@ export default function BoardArea({
             <HandArea
               hand={hand}
               playCard={playCard}
+              onLongPressCard={onHandLongPressToTrash}
             />
           </div>
 
@@ -200,7 +205,7 @@ export default function BoardArea({
           >
             {linkCards.length === 0 ? (
               <>
-                <h2 style={{ color: "inherit" }}>リンクアサルト</h2>
+                <h2 style={{ color: "inherit" }}>リンクアサルト系</h2>
 
                 <button
                   onClick={() =>
@@ -208,6 +213,14 @@ export default function BoardArea({
                   }
                 >
                   3枚
+                </button>
+
+                <button
+                  onClick={() =>
+                    startLinkAssault(4)
+                  }
+                >
+                  4枚
                 </button>
 
                 <button

@@ -1,3 +1,4 @@
+
 import BoardArea from "./BoardArea";
 
 export default function OpponentBoard({
@@ -8,6 +9,10 @@ export default function OpponentBoard({
   tacticsArea,
   tacticsDeck,
   pp,
+  setHand,
+  onHandLongPressToTrash,
+  onPlayLongPressToTrash,
+  onTrashLongPressToHand,
 
   drawStartingHand,
   drawCard,
@@ -15,12 +20,15 @@ export default function OpponentBoard({
   moveSelectedToTrash,
   linkAssault,
   endTurn,
+  endRound,
+  onLinkAssaultTrash,
 
   playCard,
   returnToHand,
 
   moveTacticToArea,
   moveTacticToPlayArea,
+  onOpenTactics,
 
   increasePP,
   decreasePP,
@@ -34,6 +42,10 @@ export default function OpponentBoard({
       tacticsArea={tacticsArea}
       tacticsDeck={tacticsDeck}
       pp={pp}
+      setHand={setHand}
+      onHandLongPressToTrash={onHandLongPressToTrash}
+      onPlayLongPressToTrash={onPlayLongPressToTrash}
+      onTrashLongPressToHand={onTrashLongPressToHand}
 
       drawStartingHand={drawStartingHand}
       drawCard={drawCard}
@@ -41,12 +53,15 @@ export default function OpponentBoard({
       moveSelectedToTrash={moveSelectedToTrash}
       linkAssault={linkAssault}
       endTurn={endTurn}
+      endRound={endRound}
+      onLinkAssaultTrash={onLinkAssaultTrash}
 
       playCard={playCard}
       returnToHand={returnToHand}
 
       moveTacticToArea={moveTacticToArea}
       moveTacticToPlayArea={moveTacticToPlayArea}
+      onOpenTactics={onOpenTactics}
 
       increasePP={increasePP}
       decreasePP={decreasePP}

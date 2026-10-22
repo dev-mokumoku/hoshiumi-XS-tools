@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-function PlayArea({ playArea, returnToHand }) {
+function PlayArea({ playArea, returnToHand, onLongPressCard }) {
   return (
     <div className="card-row">
       {playArea.map((card, index) => (
@@ -10,6 +10,7 @@ function PlayArea({ playArea, returnToHand }) {
           name={card.name}
           type={card.type} 
           onClick={() => returnToHand(index)}
+          onLongPress={() => onLongPressCard(index)}
         />
       ))}
     </div>

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import localCards from "../data/localCards";
+import Card from "../components/Card";
 import DeckBuilderPage from "./DeckBuilderPage";
 
 import "../App.css";
@@ -23,6 +25,7 @@ export default function SoloToolPage({
   const [playerDeckData, setPlayerDeckData] = useState(null);
   const [opponentDeckData, setOpponentDeckData] = useState(null);
   const [showTacticsModal, setShowTacticsModal] = useState(false);
+  const [tacticsModalOwner, setTacticsModalOwner] = useState("player");
   const [resetAllHpTrigger, setResetAllHpTrigger] = useState(0);
 
   // Player
@@ -92,6 +95,49 @@ export default function SoloToolPage({
     .filter(Boolean);
   };
 
+  const normalizeSavedLeaders = (leaders) => {
+    return leaders.map((leader) => {
+      const localCard = localCards.find(
+        (card) => String(card.id) === String(leader.id)
+      );
+  
+      return {
+        ...localCard,
+        ...leader,
+        hp:
+          leader.hp ??
+          leader.card_type?.hp ??
+          localCard?.hp ??
+          localCard?.card_type?.hp,
+        awaken_hp:
+          leader.awaken_hp ??
+          leader.card_type?.awaken_hp ??
+          localCard?.awaken_hp ??
+          localCard?.card_type?.awaken_hp,
+        type: "leader",
+      };
+    });
+  };
+
+  const normalizeSavedTactics = (tactics) => {
+    return tactics.map((tactic) => {
+      const localCard = localCards.find(
+        (card) => String(card.id) === String(tactic.id)
+      );
+  
+      return {
+        ...localCard,
+        ...tactic,
+        tactics_type:
+          tactic.tactics_type ??
+          tactic.card_type?.tactics_type ??
+          localCard?.tactics_type ??
+          localCard?.card_type?.tactics_type,
+        type: "tactics",
+      };
+    });
+  };
+
   const [savedDecks, setSavedDecks] = useState(
     JSON.parse(
       localStorage.getItem("savedDecks") || "[]"
@@ -123,7 +169,7 @@ export default function SoloToolPage({
   const [selectedDeck, setSelectedDeck] = useState("");
   const loadPlayerDeck = async () => {
     saveDeckHistory(deckCode);
-
+  
     const res = await fetch(
       `${GAS_URL}?deckCode=${deckCode}`
     );
@@ -135,7 +181,7 @@ export default function SoloToolPage({
       [...data.deck].sort(() => Math.random() - 0.5)
     );
     setPlayerTacticsDeck(
-        resolveCardsByImage(data.tactics)
+      resolveCardsByImage(data.tactics)
     );
   
     setPlayerHand([]);
@@ -149,21 +195,21 @@ export default function SoloToolPage({
 
   const loadOpponentDeck = async () => {
     saveDeckHistory(deckCode);
-
+  
     const res = await fetch(
       `${GAS_URL}?deckCode=${deckCode}`
     );
-
+  
     const data = normalizeData(await res.json());
-
+  
     setOpponentDeckData(data);
     setOpponentDeck(
       [...data.deck].sort(() => Math.random() - 0.5)
     );
     setOpponentTacticsDeck(
-      resolveCardsByImage(loaded.tactics)
+      resolveCardsByImage(data.tactics)
     );
-
+  
     setOpponentHand([]);
     setOpponentPlayArea([]);
     setOpponentTrashArea([]);
@@ -184,23 +230,28 @@ export default function SoloToolPage({
     }
   
     const loaded = target.deck;
-  
+
+    const normalizedMain = loaded.main.map((card) => ({
+      ...card,
+      type: "normal",
+    }));
+
+    const normalizedLeaders = normalizeSavedLeaders(loaded.leader);
+
+    const normalizedTactics = normalizeSavedTactics(loaded.tactics);
+
     setPlayerDeck(
-      [...loaded.main].sort(
-        () => Math.random() - 0.5
-      )
+      [...normalizedMain].sort(() => Math.random() - 0.5)
     );
-  
-    setPlayerTacticsDeck(
-      [...loaded.tactics]
-    );
-  
+
+    setPlayerTacticsDeck([...normalizedTactics]);
+
     setPlayerDeckData({
-      leaders: loaded.leader,
-      tactics: loaded.tactics,
-      deck: loaded.main,
+      leaders: normalizedLeaders,
+      tactics: normalizedTactics,
+      deck: normalizedMain,
     });
-  
+
     setPlayerHand([]);
     setPlayerPlayArea([]);
     setPlayerTrashArea([]);
@@ -221,23 +272,28 @@ export default function SoloToolPage({
     }
   
     const loaded = target.deck;
-  
+
+    const normalizedMain = loaded.main.map((card) => ({
+      ...card,
+      type: "normal",
+    }));
+
+    const normalizedLeaders = normalizeSavedLeaders(loaded.leader);
+
+    const normalizedTactics = normalizeSavedTactics(loaded.tactics);
+
     setOpponentDeck(
-      [...loaded.main].sort(
-        () => Math.random() - 0.5
-      )
+      [...normalizedMain].sort(() => Math.random() - 0.5)
     );
-  
-    setOpponentTacticsDeck(
-      [...loaded.tactics]
-    );
-  
+
+    setOpponentTacticsDeck([...normalizedTactics]);
+
     setOpponentDeckData({
-      leaders: loaded.leader,
-      tactics: loaded.tactics,
-      deck: loaded.main,
+      leaders: normalizedLeaders,
+      tactics: normalizedTactics,
+      deck: normalizedMain,
     });
-  
+
     setOpponentHand([]);
     setOpponentPlayArea([]);
     setOpponentTrashArea([]);
@@ -345,48 +401,72 @@ export default function SoloToolPage({
   };
   
   const playerEndTurn = () => {
-
     if (playerPlayArea.length > 0) {
+      setPlayerTrashHistory((prev) => {
+        const lastGroup = prev[prev.length - 1];
   
-      setPlayerTrashHistory((prev) => [
-        ...prev,
-        {
-          turn: playerTurn,
-          cards: [...playerPlayArea],
-        },
-      ]);
+        if (
+          lastGroup &&
+          lastGroup.turn === playerTurn &&
+          lastGroup.round === round
+        ) {
+          return [
+            ...prev.slice(0, -1),
+            {
+              ...lastGroup,
+              cards: [...lastGroup.cards, ...playerPlayArea],
+            },
+          ];
+        }
+  
+        return [
+          ...prev,
+          {
+            turn: playerTurn,
+            round,
+            label: `${playerTurn}ターン目（${round}ラウンド目）`,
+            cards: [...playerPlayArea],
+          },
+        ];
+      });
     }
   
-    setPlayerTrashArea((prev) => [
-      ...prev,
-      ...playerPlayArea,
-    ]);
-  
     setPlayerPlayArea([]);
-  
     setPlayerTurn((prev) => prev + 1);
   };
   
   const opponentEndTurn = () => {
-
     if (opponentPlayArea.length > 0) {
+      setOpponentTrashHistory((prev) => {
+        const lastGroup = prev[prev.length - 1];
   
-      setOpponentTrashHistory((prev) => [
-        ...prev,
-        {
-          turn: opponentTurn,
-          cards: [...opponentPlayArea],
-        },
-      ]);
+        if (
+          lastGroup &&
+          lastGroup.turn === opponentTurn &&
+          lastGroup.round === round
+        ) {
+          return [
+            ...prev.slice(0, -1),
+            {
+              ...lastGroup,
+              cards: [...lastGroup.cards, ...opponentPlayArea],
+            },
+          ];
+        }
+  
+        return [
+          ...prev,
+          {
+            turn: opponentTurn,
+            round,
+            label: `${opponentTurn}ターン目（${round}ラウンド目）`,
+            cards: [...opponentPlayArea],
+          },
+        ];
+      });
     }
   
-    setOpponentTrashArea((prev) => [
-      ...prev,
-      ...opponentPlayArea,
-    ]);
-  
     setOpponentPlayArea([]);
-  
     setOpponentTurn((prev) => prev + 1);
   };
 
@@ -430,23 +510,117 @@ export default function SoloToolPage({
     );
   };
 
-  const playerMoveToTrash = (index) => {
-    const card = playerPlayArea[index];
-  
-    setPlayerTrashArea((prev) => [...prev, card]);
-  
-    setPlayerPlayArea((prev) =>
-      prev.filter((_, i) => i !== index)
+  // トラッシュ履歴にカードを追加する共通処理
+  // 同じターンの履歴があればそこへ追加し、なければ新規作成
+  const addToTrashHistory = (setTrashHistory, card, turn) => {
+    if (!card) return;
+
+    setTrashHistory((prev) => {
+      const lastGroup = prev[prev.length - 1];
+
+      // 最後の履歴が同じターンなら、そのグループに追加
+      if (lastGroup && lastGroup.turn === turn && lastGroup.round === round) {
+        return [
+          ...prev.slice(0, -1),
+          {
+            ...lastGroup,
+            cards: [...lastGroup.cards, card],
+          },
+        ];
+      }
+
+      // 同じターンの履歴がなければ新しく作成
+      return [
+        ...prev,
+        {
+          turn,
+          round,
+          label: `${turn}ターン目（${round}ラウンド目）`,
+          cards: [card],
+        },
+      ];
+    });
+  };
+
+  // トラッシュ履歴から指定位置のカードを取り除く共通処理
+  const removeFromTrashHistory = (history, setTrashHistory, groupIndex, cardIndex) => {
+    setTrashHistory((prev) =>
+      prev
+        .map((group, i) => {
+          if (i !== groupIndex) return group;
+
+          return {
+            ...group,
+            cards: group.cards.filter((_, j) => j !== cardIndex),
+          };
+        })
+        .filter((group) => group.cards.length > 0)
     );
   };
 
+  // 自分：手札からトラッシュへ
+  const playerHandLongPressToTrash = (index) => {
+    const card = playerHand[index];
+    if (!card) return;
+
+    setPlayerHand((prev) => prev.filter((_, i) => i !== index));
+    addToTrashHistory(setPlayerTrashHistory, card, playerTurn);
+  };
+
+  // 相手：手札からトラッシュへ
+  const opponentHandLongPressToTrash = (index) => {
+    const card = opponentHand[index];
+    if (!card) return;
+
+    setOpponentHand((prev) => prev.filter((_, i) => i !== index));
+    addToTrashHistory(setOpponentTrashHistory, card, opponentTurn);
+  };
+
+  // 自分：場からトラッシュへ
+  const playerMoveToTrash = (index) => {
+    const card = playerPlayArea[index];
+    if (!card) return;
+
+    setPlayerPlayArea((prev) => prev.filter((_, i) => i !== index));
+    addToTrashHistory(setPlayerTrashHistory, card, playerTurn);
+  };
+
+  // 相手：場からトラッシュへ
   const opponentMoveToTrash = (index) => {
     const card = opponentPlayArea[index];
-  
-    setOpponentTrashArea((prev) => [...prev, card]);
-  
-    setOpponentPlayArea((prev) =>
-      prev.filter((_, i) => i !== index)
+    if (!card) return;
+
+    setOpponentPlayArea((prev) => prev.filter((_, i) => i !== index));
+    addToTrashHistory(setOpponentTrashHistory, card, opponentTurn);
+  };
+
+  // 自分：トラッシュ履歴から手札へ
+  const playerTrashLongPressToHand = (groupIndex, cardIndex) => {
+    const group = playerTrashHistory[groupIndex];
+    const card = group?.cards?.[cardIndex];
+    if (!card) return;
+
+    setPlayerHand((prev) => [...prev, card]);
+    removeFromTrashHistory(
+      playerTrashHistory,
+      setPlayerTrashHistory,
+      groupIndex,
+      cardIndex
+    );
+  };
+
+  // 相手：トラッシュ履歴から手札へ
+  const opponentTrashLongPressToHand = (groupIndex, cardIndex) => {
+    const group = opponentTrashHistory[groupIndex];
+    const card = group?.cards?.[cardIndex];
+    if (!card) return;
+
+    setOpponentHand((prev) => [...prev, card]);
+    removeFromTrashHistory(
+      opponentTrashHistory,
+      setOpponentTrashHistory,
+      groupIndex,
+      cardIndex
     );
   };
 
@@ -491,102 +665,230 @@ export default function SoloToolPage({
   const opponentMoveTacticToPlayArea = (card) => {
     if (!card) return;
   
+    // 装備タクティクス
+    if (card.tactics_type === "equipment") {
+      setPendingOpponentEquipment({ card });
+  
+      setShowTacticsModal(false);
+  
+      return;
+    }
+  
+    // 通常タクティクス
     setOpponentPlayArea((prev) => [...prev, card]);
   
     setOpponentTacticsArea((prev) =>
       prev.filter((c) => c.id !== card.id)
     );
   
-    setShowTactics(false); // もし共有モーダルなら
+    setShowTacticsModal(false); // もし共有モーダルなら
   };
 
-  const handlePlayerLeaderClick = (leaderId) => {
+  const handlePlayerLeaderClick = (leaderKey) => {
+
     // ① 装備
     if (pendingPlayerEquipment) {
-      setPlayerEquipment(prev => {
-        const current = prev[leaderId] || [];
-    
-        // 5枚制限
+
+      setPlayerEquipment((prev) => {
+        const current = prev[leaderKey] || [];
+
+        // 1人のリーダーにつき装備は5枚まで
         if (current.length >= 5) {
           return prev;
         }
-    
-        return {
+
+        const next = {
           ...prev,
-          [leaderId]: [...current, pendingPlayerEquipment.card],
+          [leaderKey]: [...current, pendingPlayerEquipment.card],
         };
+        
+        return next;
       });
-    
-      setPlayerTacticsArea(prev =>
-        prev.filter(c => c !== pendingPlayerEquipment.card)
+
+      setPlayerTacticsArea((prev) =>
+        prev.filter((c) => c !== pendingPlayerEquipment.card)
       );
-    
+
       setPendingPlayerEquipment(null);
       return;
     }
-  
-    // ② 移動
+
+    // ② 装備の移動
     if (movingPlayerEquipment) {
-      setPlayerEquipment(prev => {
-        const fromList = prev[movingPlayerEquipment.from] || [];
-        const toList = prev[leaderId] || [];
-    
+      const { card, from } = movingPlayerEquipment;
+
+      // 同じリーダーを選んだ場合は移動しない
+      if (from === leaderKey) {
+        setMovingPlayerEquipment(null);
+        return;
+      }
+
+      setPlayerEquipment((prev) => {
+        const fromList = prev[from] || [];
+        const toList = prev[leaderKey] || [];
+
+        // 移動先の装備が5枚なら移動しない
+        if (toList.length >= 5) {
+          return prev;
+        }
+
         return {
           ...prev,
-          [movingPlayerEquipment.from]:
-            fromList.filter(c => c !== movingPlayerEquipment.card),
-    
-          [leaderId]:
-            toList.length < 5
-              ? [...toList, movingPlayerEquipment.card]
-              : toList,
+          [from]: fromList.filter((c) => c !== card),
+          [leaderKey]: [...toList, card],
         };
       });
-    
+
       setMovingPlayerEquipment(null);
     }
   };
 
-  const endRound = () => {
-    // プレイヤー
-    if (playerPlayArea.length > 0) {
-      setPlayerTrashHistory((prev) => [
+  const handleOpponentLeaderClick = (leaderKey) => {
+    // 装備を付ける
+    if (pendingOpponentEquipment) {
+      const card = pendingOpponentEquipment.card;
+      const currentEquipment = opponentEquipment[leaderKey] || [];
+  
+      // 5枚以上なら、装備カードを消費せず選択状態を維持
+      if (currentEquipment.length >= 5) {
+        alert("このリーダーには5枚までしか装備できません");
+        return;
+      }
+  
+      setOpponentEquipment((prev) => ({
         ...prev,
-        {
-          turn: playerTurn,
-          round,
-          label: `${playerTurn}ターン目（${round}ラウンド目終了）`,
-          cards: [...playerPlayArea],
-        },
-      ]);
+        [leaderKey]: [...(prev[leaderKey] || []), card],
+      }));
+  
+      setOpponentTacticsArea((prev) =>
+        prev.filter((c) => c !== card)
+      );
+  
+      setPendingOpponentEquipment(null);
+      return;
     }
-
-    setPlayerTrashArea((prev) => [...prev, ...playerPlayArea]);
-    setPlayerPlayArea([]);
-
-    // 相手
-    if (opponentPlayArea.length > 0) {
-      setOpponentTrashHistory((prev) => [
+  
+    // 装備を別のリーダーへ移動する
+    if (movingOpponentEquipment) {
+      const { card, from } = movingOpponentEquipment;
+  
+      if (from === leaderKey) {
+        setMovingOpponentEquipment(null);
+        return;
+      }
+  
+      const destinationEquipment = opponentEquipment[leaderKey] || [];
+  
+      // 移動先が5枚なら、移動元からも取り除かない
+      if (destinationEquipment.length >= 5) {
+        alert("移動先のリーダーには5枚までしか装備できません");
+        return;
+      }
+  
+      setOpponentEquipment((prev) => ({
         ...prev,
-        {
-          turn: opponentTurn,
-          round,
-          label: `${opponentTurn}ターン目（${round}ラウンド目終了）`,
-          cards: [...opponentPlayArea],
-        },
-      ]);
+        [from]: (prev[from] || []).filter((c) => c !== card),
+        [leaderKey]: [...(prev[leaderKey] || []), card],
+      }));
+  
+      setMovingOpponentEquipment(null);
     }
-
-    setOpponentTrashArea((prev) => [...prev, ...opponentPlayArea]);
-    setOpponentPlayArea([]);
-
-    // ラウンド進行
-    setRound((prev) => prev + 1);
-
-    // HPリセットトリガー
-    setResetAllHpTrigger((v) => v + 1);
   };
 
+
+  const endRound = () => {
+    // プレイヤー：プレイエリアと手札を同じターンの履歴にまとめる
+    const playerCardsToTrash = [
+      ...playerPlayArea,
+      ...playerHand,
+    ];
+  
+    if (playerCardsToTrash.length > 0) {
+      setPlayerTrashHistory((prev) => {
+        const lastGroup = prev[prev.length - 1];
+  
+        if (
+          lastGroup &&
+          lastGroup.turn === playerTurn &&
+          lastGroup.round === round
+        ) {
+          return [
+            ...prev.slice(0, -1),
+            {
+              ...lastGroup,
+              cards: [...lastGroup.cards, ...playerCardsToTrash],
+            },
+          ];
+        }
+  
+        return [
+          ...prev,
+          {
+            turn: playerTurn,
+            round,
+            label: `${playerTurn}ターン目（${round}ラウンド目）`,
+            cards: playerCardsToTrash,
+          },
+        ];
+      });
+    }
+  
+    // プレイヤーのプレイエリアと手札を空にする
+    setPlayerPlayArea([]);
+    setPlayerHand([]);
+  
+    // 相手：プレイエリアと手札を同じターンの履歴にまとめる
+    const opponentCardsToTrash = [
+      ...opponentPlayArea,
+      ...opponentHand,
+    ];
+  
+    if (opponentCardsToTrash.length > 0) {
+      setOpponentTrashHistory((prev) => {
+        const lastGroup = prev[prev.length - 1];
+  
+        if (
+          lastGroup &&
+          lastGroup.turn === opponentTurn &&
+          lastGroup.round === round
+        ) {
+          return [
+            ...prev.slice(0, -1),
+            {
+              ...lastGroup,
+              cards: [...lastGroup.cards, ...opponentCardsToTrash],
+            },
+          ];
+        }
+  
+        return [
+          ...prev,
+          {
+            turn: opponentTurn,
+            round,
+            label: `${opponentTurn}ターン目（${round}ラウンド目）`,
+            cards: opponentCardsToTrash,
+          },
+        ];
+      });
+    }
+  
+    // 相手のプレイエリアと手札を空にする
+    setOpponentPlayArea([]);
+    setOpponentHand([]);
+  
+    // ターン番号をリセット
+    setPlayerTurn(1);
+    setOpponentTurn(1);
+  
+    // ラウンドを進める
+    setRound((prev) => prev + 1);
+  
+    // すべてのリーダーのHPをリセットするトリガー
+    setResetAllHpTrigger((prev) => prev + 1);
+  };
+
+  
   return (
     
     <div 
@@ -699,31 +1001,64 @@ export default function SoloToolPage({
 
                 playerEquipment={playerEquipment}
                 setPlayerEquipment={setPlayerEquipment}
-              
                 pendingPlayerEquipment={pendingPlayerEquipment}
                 setPendingPlayerEquipment={setPendingPlayerEquipment}
-              
                 movingPlayerEquipment={movingPlayerEquipment}
                 setMovingPlayerEquipment={setMovingPlayerEquipment}
-              
                 onLeaderClick={handlePlayerLeaderClick}
+
+                opponentEquipment={opponentEquipment}
+                setOpponentEquipment={setOpponentEquipment}
+                pendingOpponentEquipment={pendingOpponentEquipment}
+                setPendingOpponentEquipment={setPendingOpponentEquipment}
+                movingOpponentEquipment={movingOpponentEquipment}
+                setMovingOpponentEquipment={setMovingOpponentEquipment}
+                onOpponentLeaderClick={handleOpponentLeaderClick}
+
                 resetAllHpTrigger={resetAllHpTrigger}
               />
             </div>
+              <div className="tab-buttons">
+                <button
+                  className={activeTab === "player" ? "active" : ""}
+                  aria-pressed={activeTab === "player"}
+                  onClick={() => setActiveTab("player")}
+                  style={{
+                    backgroundColor:
+                      activeTab === "player" ? bgColor : "transparent",
+                    color: textColor,
+                    borderColor: textColor,
+                    borderWidth: activeTab === "player" ? 3 : 1,
+                    fontWeight: activeTab === "player" ? "bold" : "normal",
+                    boxShadow:
+                      activeTab === "player"
+                        ? `inset 0 0 0 2px ${textColor}`
+                        : "none",
+                  }}
+                >
+                  {activeTab === "player" ? "● 自分盤面（操作中）" : "自分盤面"}
+                </button>
 
-            <div className="tab-buttons">
-              <button
-                onClick={() => setActiveTab("player")}
-              >
-                自分盤面
-              </button>
-
-              <button
-                onClick={() => setActiveTab("opponent")}
-              >
-                相手盤面
-              </button>
-            </div>
+                <button
+                  className={activeTab === "opponent" ? "active" : ""}
+                  aria-pressed={activeTab === "opponent"}
+                  onClick={() => setActiveTab("opponent")}
+                  style={{
+                    backgroundColor:
+                      activeTab === "opponent" ? bgColor : "transparent",
+                    color: textColor,
+                    borderColor: textColor,
+                    borderWidth: activeTab === "opponent" ? 3 : 1,
+                    fontWeight: activeTab === "opponent" ? "bold" : "normal",
+                    boxShadow:
+                      activeTab === "opponent"
+                        ? `inset 0 0 0 2px ${textColor}`
+                        : "none",
+                  }}
+                >
+                  {activeTab === "opponent" ? "● 相手盤面（操作中）" : "相手盤面"}
+                </button>
+              </div>
           </div>
 
           {activeTab === "player" && (
@@ -740,7 +1075,43 @@ export default function SoloToolPage({
               setDeck={setPlayerDeck}
               setPlayArea={setPlayerPlayArea}
               setTrashArea={setPlayerTrashArea}
-              onOpenTactics={() => setShowTacticsModal(true)}
+              onOpenTactics={() => {
+                setTacticsModalOwner("player");
+                setShowTacticsModal(true);
+              }}
+              setHand={setPlayerHand}
+              onHandLongPressToTrash={playerHandLongPressToTrash}
+              onPlayLongPressToTrash={playerMoveToTrash}
+              onTrashLongPressToHand={playerTrashLongPressToHand}
+              onLinkAssaultTrash={(cards) => {
+                setPlayerTrashHistory((prev) => {
+                  const lastGroup = prev[prev.length - 1];
+              
+                  if (
+                    lastGroup &&
+                    lastGroup.turn === playerTurn &&
+                    lastGroup.round === round
+                  ) {
+                    return [
+                      ...prev.slice(0, -1),
+                      {
+                        ...lastGroup,
+                        cards: [...lastGroup.cards, ...cards],
+                      },
+                    ];
+                  }
+              
+                  return [
+                    ...prev,
+                    {
+                      turn: playerTurn,
+                      round,
+                      label: `${playerTurn}ターン目（${round}ラウンド目）`,
+                      cards,
+                    },
+                  ];
+                });
+              }}
 
               drawStartingHand={playerDrawStartingHand}
               drawCard={playerDrawCard}
@@ -764,10 +1135,49 @@ export default function SoloToolPage({
               trashArea={opponentTrashArea}
               tacticsArea={opponentTacticsArea}
               tacticsDeck={opponentTacticsDeck}
-              pendingPlayerEquipment={pendingPlayerEquipment}
-              setPendingPlayerEquipment={setPendingPlayerEquipment}
+              pendingOpponentEquipment={pendingOpponentEquipment}
+              setPendingOpponentEquipment={setPendingOpponentEquipment}
               pp={opponentPP}
-              onOpenTactics={() => setShowTacticsModal(true)}
+              setDeck={setOpponentDeck}
+              setPlayArea={setOpponentPlayArea}
+              setTrashArea={setOpponentTrashArea}
+              onOpenTactics={() => {
+                setTacticsModalOwner("opponent");
+                setShowTacticsModal(true);
+              }}
+              setHand={setOpponentHand}
+              onHandLongPressToTrash={opponentHandLongPressToTrash}
+              onPlayLongPressToTrash={opponentMoveToTrash}
+              onTrashLongPressToHand={opponentTrashLongPressToHand}
+              onLinkAssaultTrash={(cards) => {
+                setOpponentTrashHistory((prev) => {
+                  const lastGroup = prev[prev.length - 1];
+              
+                  if (
+                    lastGroup &&
+                    lastGroup.turn === opponentTurn &&
+                    lastGroup.round === round
+                  ) {
+                    return [
+                      ...prev.slice(0, -1),
+                      {
+                        ...lastGroup,
+                        cards: [...lastGroup.cards, ...cards],
+                      },
+                    ];
+                  }
+              
+                  return [
+                    ...prev,
+                    {
+                      turn: opponentTurn,
+                      round,
+                      label: `${opponentTurn}ターン目（${round}ラウンド目）`,
+                      cards,
+                    },
+                  ];
+                });
+              }}
 
               drawStartingHand={opponentDrawStartingHand}
               drawCard={opponentDrawCard}
@@ -792,9 +1202,10 @@ export default function SoloToolPage({
         >
           <div
             className="modal-content"
+            style={{ color: textColor }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2>トラッシュ履歴</h2>
+            <h2 style={{ color: textColor }}>トラッシュ履歴</h2>
 
             {playerTrashHistory.length === 0 ? (
               <p>まだカードはありません</p>
@@ -810,11 +1221,14 @@ export default function SoloToolPage({
 
                   <div className="card-row">
                     {group.cards.map((card, i) => (
-                      <img
+                      <Card
                         key={i}
                         src={card.image_url}
-                        alt={card.name}
-                        className="modal-card"
+                        name={card.name}
+                        type={card.type}
+                        onLongPress={() =>
+                          playerTrashLongPressToHand(index, i)
+                        }
                       />
                     ))}
                   </div>
@@ -838,6 +1252,7 @@ export default function SoloToolPage({
         >
           <div
             className="modal-content"
+            style={{ color: textColor }}
             onClick={(e) => e.stopPropagation()}
           >
             <h2>トラッシュ履歴</h2>
@@ -856,11 +1271,14 @@ export default function SoloToolPage({
 
                   <div className="card-row">
                     {group.cards.map((card, i) => (
-                      <img
+                      <Card
                         key={i}
                         src={card.image_url}
-                        alt={card.name}
-                        className="modal-card"
+                        name={card.name}
+                        type={card.type}
+                        onLongPress={() =>
+                          opponentTrashLongPressToHand(index, i)
+                        }
                       />
                     ))}
                   </div>
@@ -876,21 +1294,45 @@ export default function SoloToolPage({
           </div>
         </div>
       )}
+      
       {showTacticsModal && (
-        <div className="modal-overlay" onClick={() => setShowTacticsModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowTacticsModal(false)}
+        >
+          <div
+            className="modal-content"
+            style={{ color: textColor }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2>タクティクス</h2>
 
             <TacticsArea
               title="タクティクスエリア"
-              tactics={playerTacticsArea}
-              onClickTactic={playerMoveTacticToPlayArea}
+              tactics={
+                tacticsModalOwner === "player"
+                  ? playerTacticsArea
+                  : opponentTacticsArea
+              }
+              onClickTactic={
+                tacticsModalOwner === "player"
+                  ? playerMoveTacticToPlayArea
+                  : opponentMoveTacticToPlayArea
+              }
             />
 
             <TacticsArea
               title="タクティクスデッキ"
-              tactics={playerTacticsDeck}
-              onClickTactic={playerMoveTacticToArea}
+              tactics={
+                tacticsModalOwner === "player"
+                  ? playerTacticsDeck
+                  : opponentTacticsDeck
+              }
+              onClickTactic={
+                tacticsModalOwner === "player"
+                  ? playerMoveTacticToArea
+                  : opponentMoveTacticToArea
+              }
             />
 
             <button onClick={() => setShowTacticsModal(false)}>
@@ -899,6 +1341,7 @@ export default function SoloToolPage({
           </div>
         </div>
       )}
+
       {pendingPlayerEquipment && (
         <div className="state-banner">
           装備するリーダーを選択してください

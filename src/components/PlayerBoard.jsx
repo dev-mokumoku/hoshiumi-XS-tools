@@ -11,7 +11,10 @@ export default function PlayerBoard({
   setDeck,
   setPlayArea,
   setTrashArea,
-
+  onHandLongPressToTrash,
+  onPlayLongPressToTrash,
+  onTrashLongPressToHand,
+  
   drawStartingHand,
   drawCard,
   resetGame,
@@ -20,6 +23,8 @@ export default function PlayerBoard({
   endTurn,
   endRound,
   onOpenTactics,
+  setHand,
+  onLinkAssaultTrash,
 
   playCard,
   returnToHand,
@@ -52,6 +57,10 @@ export default function PlayerBoard({
       setPlayArea={setPlayArea}
       setTrashArea={setTrashArea}
       onOpenTactics={onOpenTactics}
+      setHand={setHand}
+      onHandLongPressToTrash={onHandLongPressToTrash}
+      onPlayLongPressToTrash={onPlayLongPressToTrash}
+      onTrashLongPressToHand={onTrashLongPressToHand}
 
       drawStartingHand={drawStartingHand}
       drawCard={drawCard}
@@ -60,6 +69,7 @@ export default function PlayerBoard({
       linkAssault={linkAssault}
       endTurn={endTurn}
       endRound={endRound}
+      onLinkAssaultTrash={onLinkAssaultTrash}
 
       playCard={playCard}
       returnToHand={returnToHand}

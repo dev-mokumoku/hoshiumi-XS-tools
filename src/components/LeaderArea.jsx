@@ -13,12 +13,18 @@ export default function LeaderArea({
   setMovingPlayerEquipment,
   onLeaderClick,
   resetAllHpTrigger,
+  pendingOpponentEquipment,
+  setPendingOpponentEquipment,
+  movingOpponentEquipment,
+  setMovingOpponentEquipment,
+  onOpponentLeaderClick,
 }) {
   // 元の HP 管理ロジックをそのまま使用
   const [leaderStates, setLeaderStates] = useState([]);
   const [opponentLeaderStates, setOpponentLeaderStates] = useState([]);
 
   useEffect(() => {
+    console.log("リーダー情報:", leaders);
     setLeaderStates(
       leaders.map((leader) => ({
         ...leader,
@@ -84,17 +90,14 @@ export default function LeaderArea({
     setOpponentLeaderStates((prev) =>
       prev.map((leader, i) => {
         if (i !== index) return leader;
-  
+
         const newHp = Math.max(
           0,
           Math.min(
-            leader.awakened
-              ? leader.awaken_hp
-              : leader.hp,
+            240,
             leader.currentHp + amount
           )
         );
-  
         return {
           ...leader,
           currentHp: newHp,
@@ -133,14 +136,14 @@ export default function LeaderArea({
     setOpponentLeaderStates((prev) =>
       prev.map((leader, i) => {
         if (i !== index) return leader;
-  
+
         const diff =
           leader.awaken_hp - leader.hp;
-  
+
         return {
           ...leader,
           awakened: !leader.awakened,
-  
+
           currentHp: leader.awakened
             ? Math.max(
                 0,
@@ -160,15 +163,20 @@ export default function LeaderArea({
     currentHp: leader.awakened ? leader.awaken_hp : leader.hp,
   });
 
-
   return (
     <div className="leader-wrapper">
 
       {/* 自分のリーダー */}
       <div className="leader-grid">
-        {leaderStates.map((leader, index) => (
-          <div key={leader.leader_id} className="leader-item" onClick={() => onLeaderClick(leader.leader_id)}>
+      {leaderStates.map((leader, index) => {
+        const leaderKey = leader.id ?? leader.leader_id;
 
+        return (
+          <div
+            key={leaderKey ?? index}
+            className="leader-item"
+            onClick={() => onLeaderClick(leaderKey)}
+          >
             <div 
                 className="leader-image-wrapper"
                 onMouseDown={() =>
@@ -203,24 +211,29 @@ export default function LeaderArea({
 
             {/* 装備表示 */}
             <div className="equipment-stack">
-              {(playerEquipment[leader.leader_id] || []).map((card, index) => (
+              {(playerEquipment[leaderKey] || []).map((card, index) => (
                 <img
-                  key={index}
-                  src={card.image_url}
-                  className="equipment-image"
-                  style={{
-                    transform: `translate(${index * 24}px, ${index * 16}px)`,
-                    zIndex: index,
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-
-                    setMovingPlayerEquipment({
-                      card,
-                      from: leader.leader_id,
-                    });
-                  }}
+                key={`${leaderKey}-${card.id ?? card.name}-${index}`}
+                src={card.image_url}
+                alt={card.name}
+                className="equipment-image"
+                style={{
+                  transform: `translate(${index * 24}px, ${index * 16}px)`,
+                  zIndex: index,
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                
+                  if (pendingPlayerEquipment || movingPlayerEquipment) {
+                    return;
+                  }
+                
+                  setMovingPlayerEquipment({
+                    card,
+                    from: leaderKey,
+                  });
+                }}
                 />
               ))}
             </div>
@@ -233,37 +246,43 @@ export default function LeaderArea({
             {leader.currentHp === 0 && (
               <div className="leader-down">DOWN</div>
             )}
-
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* 相手のリーダー */}
       <div className="leader-grid">
-        {opponentLeaderStates.map((leader, index) => (
-          <div key={leader.leader_id} className="leader-item">
+      {opponentLeaderStates.map((leader, index) => {
+        const leaderKey = leader.id ?? leader.leader_id;
 
-            <div
-              className="leader-image-wrapper"
-              onMouseDown={() =>
-                handlePressStart(index, toggleOpponentAwaken)
-              }
-              onMouseUp={handlePressEnd}
-              onMouseLeave={handlePressEnd}
-              onClick={(e) => {
-                if (isLongPress.current) return;
-
-                const rect =
-                  e.currentTarget.getBoundingClientRect();
-
-                const y = e.clientY - rect.top;
-
-                if (y < rect.height / 2) {
-                  adjustOpponentHp(index, +10);
-                } else {
-                  adjustOpponentHp(index, -10);
+        return (
+          <div
+            key={leaderKey ?? index}
+            className="leader-item"
+            onClick={() => onOpponentLeaderClick(leaderKey)}
+          >
+            <div 
+                className="leader-image-wrapper"
+                onMouseDown={() =>
+                  handlePressStart(index, toggleOpponentAwaken)
                 }
-              }}
+                onMouseUp={handlePressEnd}
+                onMouseLeave={handlePressEnd}
+                onClick={(e) => {
+                  if (isLongPress.current) return;
+                  if (pendingOpponentEquipment || movingOpponentEquipment) return;
+                  const rect =
+                    e.currentTarget.getBoundingClientRect();
+              
+                  const y = e.clientY - rect.top;
+              
+                  if (y < rect.height / 2) {
+                    adjustOpponentHp(index, +10);
+                  } else {
+                    adjustOpponentHp(index, -10);
+                  }
+                }}
             >
             <img
               src={
@@ -275,6 +294,35 @@ export default function LeaderArea({
               className="leader-img"
             />
 
+            {/* 装備表示 */}
+            <div className="equipment-stack">
+              {(opponentEquipment[leaderKey] || []).map((card, index) => (
+                <img
+                key={`${leaderKey}-${card.id ?? card.name}-${index}`}
+                src={card.image_url}
+                alt={card.name}
+                className="equipment-image"
+                style={{
+                  transform: `translate(${index * 24}px, ${index * 16}px)`,
+                  zIndex: index,
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                
+                  if (pendingOpponentEquipment || movingOpponentEquipment) {
+                    return;
+                  }
+                
+                  setMovingOpponentEquipment({
+                    card,
+                    from: leaderKey,
+                  });
+                }}
+                />
+              ))}
+            </div>
+
               <div className="leader-hp-overlay opponent-hp">
                 {leader.currentHp}
               </div>
@@ -283,11 +331,10 @@ export default function LeaderArea({
             {leader.currentHp === 0 && (
               <div className="leader-down">DOWN</div>
             )}
-
           </div>
-        ))}
+          );
+        })}
+        </div>
       </div>
-
-    </div>
-  );
-}
+    );
+  }
