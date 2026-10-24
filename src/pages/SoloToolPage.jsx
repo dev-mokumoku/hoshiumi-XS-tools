@@ -84,15 +84,37 @@ export default function SoloToolPage({
       localStorage.getItem("allCards") || "[]"
     );
   
-    return cardsFromDeck
-    .map((c) => {
-      const found = allCards.find(
-        (local) => local.image_url === c.image_url
+    const cardSources = [...allCards, ...localCards];
+  
+    const normalizeImageUrl = (url) =>
+      String(url || "")
+        .split("?")[0]
+        .replace(/\/+$/, "");
+  
+    return cardsFromDeck.map((card) => {
+      const targetUrl = normalizeImageUrl(card.image_url);
+  
+      const found = cardSources.find(
+        (local) =>
+          normalizeImageUrl(local.image_url) === targetUrl
       );
   
-      return found ? { ...found, type: c.type } : null;
-    })
-    .filter(Boolean);
+      if (found) {
+        return {
+          ...found,
+          ...card,
+          type: "tactics",
+          name: card.name || found.name,
+        };
+      }
+  
+      // 一致するカードがなくても、タクティクスを残す
+      return {
+        ...card,
+        type: "tactics",
+        name: card.name || "タクティクス",
+      };
+    });
   };
 
   const normalizeSavedLeaders = (leaders) => {
@@ -888,7 +910,7 @@ export default function SoloToolPage({
     setResetAllHpTrigger((prev) => prev + 1);
   };
 
-  
+
   return (
     
     <div 

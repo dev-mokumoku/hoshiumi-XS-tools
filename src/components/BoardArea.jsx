@@ -104,7 +104,7 @@ export default function BoardArea({
               </button>
             </div>
 
-            <div className="play-center">
+            <div className="play-center" data-watermark="プレイエリア">
             <PlayArea
                 playArea={playArea}
                 returnToHand={returnToHand}
@@ -130,7 +130,7 @@ export default function BoardArea({
       <div className="section">
         <div className="hand-row">
 
-          <div className="hand-column">
+          <div className="hand-column" data-watermark="手札">
             <HandArea
               hand={hand}
               playCard={playCard}
@@ -152,9 +152,9 @@ export default function BoardArea({
                 </div>
             </div>
 
-            <button onClick={drawStartingHand}>
+            {/*<button onClick={drawStartingHand}>
                 初手5枚
-            </button>
+            </button>*/}
 
             <button onClick={onOpenTactics}>
               タクティクス
